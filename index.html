@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year RIMI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
+}
+
+/* animated gradient */
+.bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(45deg,#ff5f6d,#ffc371,#ff7eb3,#ff758c,#ff5f6d);
+    background-size:500% 500%;
+    animation:bgmove 12s infinite alternate;
+    z-index:0;
+}
+@keyframes bgmove{
+    from{background-position:0% 0%}
+    to{background-position:100% 100%}
+}
+
+/* soft background image */
+.bg-pic{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.15;
+    z-index:1;
+}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    font-size:26px;
+    animation: float 7s linear infinite;
+    opacity:.9;
+    z-index:2;
+}
+@keyframes float{
+    0%{transform:translateY(110vh) scale(.8);opacity:0}
+    30%{opacity:1}
+    100%{transform:translateY(-15vh) scale(1.6);opacity:0}
+}
+
+/* center content */
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    animation:fadeIn 2s ease forwards;
+    opacity:0;
+    z-index:3;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+/* profile pic */
+.profile-pic{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid rgba(255,255,255,0.9);
+    box-shadow:0 0 25px rgba(255,80,120,0.9);
+    margin:0 auto 12px;
+    display:block;
+    animation: picGlow 2s ease-in-out infinite alternate;
+}
+@keyframes picGlow{
+    from{box-shadow:0 0 15px rgba(255,80,120,0.6)}
+    to{box-shadow:0 0 35px rgba(255,120,160,1)}
+}
+
+/* title */
+.title{
+    font-size:42px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 5px #fff,0 0 10px #ff5f6d}
+    to{text-shadow:0 0 20px #fff,0 0 35px #ff3366}
+}
+
+.sub{
+    margin-top:6px;
+    font-size:18px;
+    opacity:.9;
+}
+
+/* typing text */
+.type{
+    margin-top:20px;
+    font-size:20px;
+    min-height:140px;
+    opacity:0;
+    display:inline-block;
+    white-space:pre-wrap;
+}
+
+.cursor{
+    display:inline-block;
+    width:8px;
+    height:22px;
+    background:white;
+    margin-left:2px;
+    animation:blink 0.7s infinite;
+    vertical-align:bottom;
+}
+@keyframes blink{
+    0%, 50%{opacity:1}
+    51%,100%{opacity:0}
+}
+
+/* ending line */
+.end{
+    margin-top:18px;
+    font-size:26px;
+    opacity:0;
+    animation:endShow 1.8s ease forwards;
+    animation-delay:8.5s;
+}
+@keyframes endShow{
+    to{opacity:1;transform:scale(1.05)}
+}
+
+.footer{
+    margin-top:10px;
+    opacity:.9;
+    font-size:17px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+function playMusic(){
+    music.volume = 0.4;
+    music.play().catch(()=>{}); // catch error
+}
+
+// ইউজার প্রথমে টাচ বা ক্লিক করলে মিউজিক চালু হবে
+document.body.addEventListener("click", playMusic, {once:true});
+document.body.addEventListener("touchstart", playMusic, {once:true});
+</script>
+
+
+<div class="bg"></div>
+<img src="rimi.jpg" class="bg-pic">
+
+<div class="center">
+    <img src="rimi.jpg" class="profile-pic">
+
+    <div class="title">❤️ Happy New Year My Love ❤️</div>
+    <div class="sub">Only For You — RIMI ✨</div>
+
+    <div class="type" id="text"></div><div class="cursor"></div>
+
+    <div class="end">🌟 I Love You — Always & Forever 🌟</div>
+
+    <div class="footer">
+        — তোমার <b>FARHAN</b> ❤️
+    </div>
+</div>
+
+<script>
+function createHeart(){
+    const hearts = ["❤️","🖤","💙","💜","💖"]; // বিভিন্ন রঙের হ্র্ট ইমোজি
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + "vw";
+    h.style.animationDuration = (5 + Math.random()*5) + "s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 9000);
+}
+setInterval(createHeart, 320);
+
+setInterval(createHeart, 320);
+
+// romantic typing effect with realistic cursor
+let messages = [
+"RIMI… 💖",
+"নতুন বছরের প্রথম শুভেচ্ছাটা\nশুধু তোমাকেই দিতে চাই…",
+"তোমার হাসিটা — আমার কাছে সবচেয়ে দামী 😊",
+"এই নতুন বছরে — আমি আর তুমি,\nচিরদিন একসাথে থাকব ✨"
+];
+
+let textEl = document.getElementById("text");
+let cursorEl = document.querySelector(".cursor");
+let i = 0, j = 0;
+
+function typeRomantic() {
+    textEl.style.opacity = "1"; // show text
+    if(i < messages.length){
+        if(j < messages[i].length){
+            let char = messages[i][j];
+            if(char === "\n"){
+                textEl.innerHTML += "<br>";
+            } else {
+                textEl.innerHTML += char;
+            }
+            j++;
+            setTimeout(typeRomantic, 100 + Math.random()*50);
+        } else {
+            j = 0;
+            i++;
+            textEl.innerHTML += "<br><br>";
+            setTimeout(typeRomantic, 600);
+        }
+    } else {
+        // typing finished, cursor blink slower
+        cursorEl.style.animation = "blink 1.2s infinite";
+    }
+}
+
+typeRomantic();
+</script>
+
+</body>
+</html>
